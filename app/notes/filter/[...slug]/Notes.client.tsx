@@ -13,7 +13,11 @@ import css from './page.module.css';
 import { useFetchNotes } from '@/queries/notes';
 import { useDebouncedCallback } from 'use-debounce';
 
-export default function NotesClient() {
+type Props = {
+  tag?: string;
+};
+
+export default function NotesClient({ tag }: Props) {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +32,8 @@ export default function NotesClient() {
 
   const { data, error, isLoading, isError, isSuccess } = useFetchNotes(
     page,
-    search
+    search,
+    tag
   );
 
   const notes = data?.notes ?? [];

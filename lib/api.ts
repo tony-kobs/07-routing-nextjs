@@ -21,6 +21,7 @@ export interface CreateNoteProps {
 export interface FetchNotesParams {
   page: number;
   search: string;
+  tag?: string;
 }
 
 export interface NotesResponse {
@@ -31,12 +32,14 @@ export interface NotesResponse {
 export async function fetchNotes({
   page,
   search,
+  tag,
 }: FetchNotesParams): Promise<NotesResponse> {
   const { data } = await api.get<NotesResponse>('/notes', {
     params: {
       page,
       perPage: PER_PAGE,
       search,
+      ...(tag ? { tag } : {}),
     },
   });
 
